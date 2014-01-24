@@ -1,8 +1,10 @@
-56f0201f6481f3ad9adcb13dc99e4fd0 *DESCRIPTION
+b1a7cd2d2f0e91ed141c736f7e019769 *DESCRIPTION
 3eb531ac4fb04242ee2158e51d8f6f91 *NAMESPACE
 8b537185df68354f2a22208b216d61fc *R/concord.R
 ac230d9bb8e170f6a139a032e9140d85 *man/concord.Rd
 a1f8eab2b1b3d4d0e8df5b8ce6081fbc *man/symlasso.Rd
-8c17884181a3a0b4a5b71b90dd668fcf *src/concord.c
+8290d2e9740414e315237f0d5d4024bb *src/Makevars
+8290d2e9740414e315237f0d5d4024bb *src/Makevars.win
+04751c3e651a93efa4d613f550bf3687 *src/concord.c
 3a2f6ad117b9dc4e00e0782cd448fc8e *src/concord.h
-2dcfe2d62d8866dcc32831eb55901fc6 *src/symlasso.c
+c14043f323ab80a903c167956d530372 *src/symlasso.c

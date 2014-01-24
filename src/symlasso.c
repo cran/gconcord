@@ -1,7 +1,6 @@
-#define R_BLAS_H
-
-#include <R.h>
 #include <sys/param.h>
+#include <R.h>
+#include <Rmath.h>
 #include <R_ext/BLAS.h>
 #include "concord.h"
 
@@ -82,14 +81,14 @@ void symlassoC(int *nIn, int *pIn, double *C, double *lambda, double *omega,
 	  }
 	}
 
-	maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,j,p)]-omega[i*p+j]));
+	maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,j,p)]-omega[i*p+j]));
 	omegaold[lindx(i,j,p)] = omega[i*p+j];
       }
     }
     // Update diagonals of Omega
     for (i=0;i<p;i++){
       sig[i] = (-1+sqrt(1+4*q[i]*C[i*p+i]))/(2*q[i]);
-      maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,i,p)]-(sig[i])));
+      maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,i,p)]-(sig[i])));
       omegaold[lindx(i,i,p)] = sig[i];
     }
 
@@ -212,7 +211,7 @@ void symlassoC2(int *nIn, int *pIn, double *C, double *lambda, double *omega,
       for (j=i;j<p;j++){
 	k = lindx(i,j,p);
 	iterates[r*tp+k] = omega[i*p+j];
-	maxdiff = MAX(maxdiff,fabs(iterates[(r-1)*tp+k]-iterates[r*tp+k]));
+	maxdiff = fmax2(maxdiff,fabs(iterates[(r-1)*tp+k]-iterates[r*tp+k]));
 	/* Rprintf("%d : %f %f %e %e\n", r,iterates[(r-1)*tp+k],iterates[r*tp+k],maxdiff,*tol); */
       }
     }

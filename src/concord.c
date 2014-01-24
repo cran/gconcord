@@ -1,5 +1,6 @@
 #include <sys/param.h>
 #include <R.h>
+#include <Rmath.h>
 #include <R_ext/BLAS.h>
 #include "concord.h"
 
@@ -70,7 +71,7 @@ void concordC(int *nIn, int *pIn, double *S, double *lambda, double *omega,
 	omega[i*p+j] = shrink( -(s1+s2)/sSum, lambda[lindx(i,j,p)]/sSum );
 	omega[j*p+i] = omega[i*p+j];
 
-	maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,j,p)]-omega[i*p+j]));
+	maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,j,p)]-omega[i*p+j]));
 	omegaold[lindx(i,j,p)] = omega[i*p+j];
       }
     }
@@ -85,7 +86,7 @@ void concordC(int *nIn, int *pIn, double *S, double *lambda, double *omega,
 
       omega[i*p+i] = (-s1 + sqrt((s1*s1) + (4*S[i*p+i])))/(2*S[i*p+i]);
 
-      maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,i,p)]-omega[i*p+i]));
+      maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,i,p)]-omega[i*p+i]));
       omegaold[lindx(i,i,p)] = omega[i*p+i];
 
     }
@@ -194,7 +195,7 @@ void concordC2(int *nIn, int *pIn, double *Y, double *S, double *lambda, double 
 	  sSum = tmpdiff/omega[j*p+j];
 	  F77_NAME(daxpy)(&n, &sSum, &Y[i*n], &one, &resid[j*n], &one);
 	  
-	  maxdiff = MAX(maxdiff, fabs(tmpdiff));
+	  maxdiff = fmax2(maxdiff, fabs(tmpdiff));
 	  omegaold[lindx(i,j,p)] = omega[i*p+j];
 	} 
       }
@@ -212,7 +213,7 @@ void concordC2(int *nIn, int *pIn, double *Y, double *S, double *lambda, double 
       sSum = 1 - sSum;
       F77_NAME(daxpy)(&n, &sSum, &Y[i*n], &one, &resid[i*n], &one);
 
-      maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,i,p)]-omega[i*p+i]));
+      maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,i,p)]-omega[i*p+i]));
       omegaold[lindx(i,i,p)] = omega[i*p+i];
     }
 
@@ -291,7 +292,7 @@ void concordC3(int *nIn, int *pIn, double *S, double *lambda, double *omega,
 	omega[i*p+j] = shrink( -(s1+s2)/sSum, lambda[lindx(i,j,p)]/sSum );
 	omega[j*p+i] = omega[i*p+j];
 
-	maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,j,p)]-omega[i*p+j]));
+	maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,j,p)]-omega[i*p+j]));
 	omegaold[lindx(i,j,p)] = omega[i*p+j];
       }
     }
@@ -302,7 +303,7 @@ void concordC3(int *nIn, int *pIn, double *S, double *lambda, double *omega,
       s1 = F77_NAME(ddot)(&p, &omega[i*p], &one, &S[i*p], &one) - omega[i*p+i]*S[i*p+i];
       omega[i*p+i] = (-s1 + sqrt((s1*s1) + (4*S[i*p+i])))/(2*S[i*p+i]);
 
-      maxdiff = MAX(maxdiff, fabs(omegaold[lindx(i,i,p)]-omega[i*p+i]));
+      maxdiff = fmax2(maxdiff, fabs(omegaold[lindx(i,i,p)]-omega[i*p+i]));
       omegaold[lindx(i,i,p)] = omega[i*p+i];
 
     }
